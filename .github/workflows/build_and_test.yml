@@ -42,5 +42,5 @@ jobs:
     - name: Test with pytest
       run: |
         pip install pytest
-	export LD_LIBRARY_PATH=/usr/lib/lp_solve/
+        export LD_LIBRARY_PATH=/usr/lib/lp_solve/
         pytest tests/
