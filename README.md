@@ -94,3 +94,7 @@ Note
 ----
 
 You can add `--verbose 1` to any of the examples to obtain a more verbose output.
+
+Known issues
+------------
+Does not work on Python 3.8.
