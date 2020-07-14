@@ -250,14 +250,15 @@ class Parser(object):
             self.ssa(fnc)
             self.rmtmp(fnc)
 
-    def visit(self, node):
+    def visit(self, node, name=None):
 
         # Skip None-node
         if node is None:
             return
 
         # Name of the node class
-        name = node.__class__.__name__
+        if name is None:
+            name = node.__class__.__name__
 
         # Get method
         meth = getattr(self, 'visit_%s' % (name,), None)

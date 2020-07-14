@@ -74,6 +74,20 @@ class PyParser(Parser):
 
     # Methods for visiting literals
 
+    def visit_Constant(self, node):
+        if isinstance(node.value, str):
+            return self.visit(node, "Str")
+        elif isinstance(node.value, bytes):
+            return self.visit(node, "Bytes")
+        elif isinstance(node.value, bool):
+            return self.visit(node, "NameConstant")
+        elif node.value is Ellipsis:
+            return self.visit(node, "Ellipsis")
+        elif isinstance(node.value, (int, float)):
+            return self.visit(node, "Num")
+        else:
+            raise NotSupported("Unimplemented Constant visitor for '%s'" % (node.value,))
+
     def visit_Num(self, node):
         if type(node.n) in (int, float, int, complex):
             return Const(str(node.n), line=node.lineno)
