@@ -232,6 +232,9 @@ class CInterpreter(Interpreter):
     def execute_exp(self, x):
         return math.exp(x)
 
+    def execute_scanf(self, f, mem):
+        return sum(map(lambda x: len(str(x)), filter(lambda x: not isinstance(x, UndefValue), [self.execute_Var(arg, mem) for arg in f.args])))
+
     def tonumeric(self, v):
 
         if v in [True, False]:
