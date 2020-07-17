@@ -12,7 +12,7 @@ from copy import deepcopy
 from .py_parser import PyParser
 
 from .interpreter import Interpreter, addlanginter, RuntimeErr, UndefValue
-from .model import Var, Op, VAR_IN, VAR_OUT, VAR_RET, prime
+from .model import Var, Op, Const, VAR_IN, VAR_OUT, VAR_RET, prime
 
 
 def eargs(fun):
@@ -433,6 +433,19 @@ class PyInterpreter(Interpreter):
     @eargs
     def execute_ignore_none(self, s):
         return
+
+    def execute_input(self, f, mem):
+        if len(f.args) == 1:
+            arg = self.execute(f.args[0], mem)
+            if isinstance(arg, UndefValue):
+                raise RuntimeErr('undefined value')
+            mem[VAR_OUT] += str(arg)
+        elif len(f.args) > 1:
+            raise TypeError("input expected at most 1 argument, got %d" % len(f.args))
+
+        res = self.execute_ListHead(Op("ListHead", Const("Object"), Var(VAR_IN)), mem)
+        mem[VAR_IN] = self.execute_ListTail(Op("ListTail", Var(VAR_IN)), mem)
+        return res
 
     def execute_map(self, m, mem):
         if isinstance(m.args[0], Var) and m.args[0].name == 'mul':
