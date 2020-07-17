@@ -185,6 +185,14 @@ class PyInterpreter(Interpreter):
         return abs(x)
 
     @eargs
+    def execute_min(self, *a):
+        return min(*a)
+
+    @eargs
+    def execute_max(self, *a):
+        return max(*a)
+
+    @eargs
     def execute_round(self, *a):
         return round(*a)
 
@@ -419,6 +427,10 @@ class PyInterpreter(Interpreter):
         return list(reversed(l))
 
     @eargs
+    def execute_sort(self, l):
+        return list(sorted(l))
+
+    @eargs
     def execute_enumerate(self, *a):
         return list(enumerate(*a))
 
@@ -433,6 +445,14 @@ class PyInterpreter(Interpreter):
     @eargs
     def execute_ignore_none(self, s):
         return
+
+    @eargs
+    def execute_split(self, s, sep=None, maxsplit=-1):
+        return s.split(sep, maxsplit)
+
+    @eargs
+    def execute_strip(self, s, chars=None):
+        return s.strip(chars)
 
     def execute_input(self, f, mem):
         if len(f.args) == 1:
@@ -458,6 +478,9 @@ class PyInterpreter(Interpreter):
 
     def execute_reversed(self, o, mem):
         return self.execute_reverse(o, mem)
+
+    def execute_sorted(self, o, mem):
+        return self.execute_sort(o, mem)
 
     def execute_BoundVar(self, c, mem):
         var = int(c.args[0].value)
