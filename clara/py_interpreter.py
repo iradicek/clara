@@ -12,7 +12,7 @@ from copy import deepcopy
 from .py_parser import PyParser
 
 from .interpreter import Interpreter, addlanginter, RuntimeErr, UndefValue
-from .model import Var, Op, VAR_IN, VAR_OUT, VAR_RET, prime
+from .model import Var, Op, Const, VAR_IN, VAR_OUT, VAR_RET, prime
 
 
 def eargs(fun):
@@ -183,6 +183,14 @@ class PyInterpreter(Interpreter):
     @eargs
     def execute_abs(self, x):
         return abs(x)
+
+    @eargs
+    def execute_min(self, *a):
+        return min(*a)
+
+    @eargs
+    def execute_max(self, *a):
+        return max(*a)
 
     @eargs
     def execute_round(self, *a):
@@ -419,6 +427,10 @@ class PyInterpreter(Interpreter):
         return list(reversed(l))
 
     @eargs
+    def execute_sort(self, l):
+        return list(sorted(l))
+
+    @eargs
     def execute_enumerate(self, *a):
         return list(enumerate(*a))
 
@@ -434,6 +446,27 @@ class PyInterpreter(Interpreter):
     def execute_ignore_none(self, s):
         return
 
+    @eargs
+    def execute_split(self, s, sep=None, maxsplit=-1):
+        return s.split(sep, maxsplit)
+
+    @eargs
+    def execute_strip(self, s, chars=None):
+        return s.strip(chars)
+
+    def execute_input(self, f, mem):
+        if len(f.args) == 1:
+            arg = self.execute(f.args[0], mem)
+            if isinstance(arg, UndefValue):
+                raise RuntimeErr('undefined value')
+            mem[VAR_OUT] += str(arg)
+        elif len(f.args) > 1:
+            raise TypeError("input expected at most 1 argument, got %d" % len(f.args))
+
+        res = self.execute_ListHead(Op("ListHead", Const("Object"), Var(VAR_IN)), mem)
+        mem[VAR_IN] = self.execute_ListTail(Op("ListTail", Var(VAR_IN)), mem)
+        return res
+
     def execute_map(self, m, mem):
         if isinstance(m.args[0], Var) and m.args[0].name == 'mul':
             import operator
@@ -445,6 +478,9 @@ class PyInterpreter(Interpreter):
 
     def execute_reversed(self, o, mem):
         return self.execute_reverse(o, mem)
+
+    def execute_sorted(self, o, mem):
+        return self.execute_sort(o, mem)
 
     def execute_BoundVar(self, c, mem):
         var = int(c.args[0].value)

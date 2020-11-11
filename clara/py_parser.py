@@ -19,11 +19,11 @@ class PyParser(Parser):
     # During parsing, we currently can't check for types,
     # so this is done in the interpreter.
     ATTR_FNCS = ['append', 'extend', 'insert', 'remove', 'pop', 'sort',
-                 'reverse', 'clear', 'popitem', 'update']
+                 'reverse', 'sort', 'clear', 'popitem', 'update']
     BUILTIN_FNCS = [
         'input', 'float', 'int', 'bool', 'str', 'list', 'dict',
         'set', 'tuple', 'round', 'pow', 'sum', 'range', 'xrange', 'len',
-        'reversed', 'enumerate', 'abs', 'max', 'min', 'type', 'zip', 'map',
+        'reversed', 'sorted', 'enumerate', 'abs', 'max', 'min', 'type', 'zip', 'map',
         'isinstance']
     UNSUPPORTED_BUILTIN_FNCS = ['eval', 'iter']
     CONSTS = ['True', 'False', 'None', 'list', 'tuple', 'int', 'dict',
@@ -97,6 +97,9 @@ class PyParser(Parser):
                 line=node.lineno)
 
     def visit_Str(self, node):
+        return Const('"{}"'.format(node.s), line=node.lineno)
+
+    def visit_NameConstant(self, node):
         return Const('"{}"'.format(node.s), line=node.lineno)
 
     def visit_List(self, node):
