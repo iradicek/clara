@@ -161,7 +161,7 @@ class CParser(Parser):
             for item in node.block_items:
                 res = self.visit(item)
 
-                if isinstance(res, Op) and res.name == 'FuncCall':
+                if isinstance(res, Op) and res.name in {'FuncCall', 'scanf'}:
                     self.addexpr('_', res)
                 
     def visit_Assignment(self, node):
@@ -477,6 +477,8 @@ of 'scanf' at line %s.",
             if len(args) > len(fs):
                 fs += ['*' for _ in range(len(args) - len(fs))]
 
+        vars_list = []
+
         # Iterate formats and arguments
         for f, a in zip(fs, args):
 
@@ -525,6 +527,9 @@ of 'scanf' at line %s.",
                                    line=node.coord.line)
             self.addexpr(VAR_IN,
                          Op('ListTail', Var(VAR_IN), line=node.coord.line))
+            vars_list.append(a)
+
+        return Op("scanf", *vars_list, line=node.coord.line)
 
     def visit_ExprList(self, node):
         '''
