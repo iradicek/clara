@@ -79,7 +79,7 @@ class PyParser(Parser):
             return self.visit(node, "Str")
         elif isinstance(node.value, bytes):
             return self.visit(node, "Bytes")
-        elif isinstance(node.value, bool):
+        elif node.value is None or isinstance(node.value, bool):
             return self.visit(node, "NameConstant")
         elif node.value is Ellipsis:
             return self.visit(node, "Ellipsis")
@@ -87,6 +87,9 @@ class PyParser(Parser):
             return self.visit(node, "Num")
         else:
             raise NotSupported("Unimplemented Constant visitor for '%s'" % (node.value,))
+
+    def visit_NameConstant(self, node):
+        return Const(str(node.value))
 
     def visit_Num(self, node):
         if type(node.n) in (int, float, int, complex):
