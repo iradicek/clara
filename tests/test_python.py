@@ -5,7 +5,6 @@ Some basic (regression) Python tests
 from utils import get_full_data_filename, parse_file
 
 from clara.interpreter import getlanginter
-from clara.matching import Matching
 from clara.model import VAR_RET, prime
 from clara.parser import getlangparser
 
@@ -30,3 +29,9 @@ def test_list_comp():
         print(trace)
         value = trace[-1][2][retvar]
         assert value == o
+
+def test_named_consts():
+    f = get_full_data_filename("named_consts.py")
+    parser = getlangparser("py")
+    m = parse_file(f, parser)
+    assert m is not None
