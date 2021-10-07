@@ -10,6 +10,15 @@ programming assignments, described in the following paper:
 (https://dl.acm.org/doi/10.1145/3192366.3192387 and https://arxiv.org/abs/1603.03165).
 
 
+Supported Python versions
+=========================
+
+The package is currently tested on the following Python versions:
+- 3.6
+- 3.7
+- 3.8
+- 3.9
+
 Dependencies
 ============
 - C compiler
@@ -94,7 +103,3 @@ Note
 ----
 
 You can add `--verbose 1` to any of the examples to obtain a more verbose output.
-
-Known issues
-------------
-May not work well on Python 3.8.

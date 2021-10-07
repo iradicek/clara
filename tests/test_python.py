@@ -2,13 +2,10 @@
 Some basic (regression) Python tests
 """
 
-import pytest
-
 from utils import get_full_data_filename, parse_file
 
 from clara.interpreter import getlanginter
-from clara.matching import Matching
-from clara.model import VAR_RET, prime
+from clara.model import VAR_RET, prime, Const
 from clara.parser import getlangparser
 
 def test_list_comp():
@@ -32,3 +29,28 @@ def test_list_comp():
         print(trace)
         value = trace[-1][2][retvar]
         assert value == o
+
+def test_consts():
+    f = get_full_data_filename("named_consts.py")
+    parser = getlangparser("py")
+    m = parse_file(f, parser)
+    main = m.getfnc("main")
+    loc = list(main.locs())[0]
+
+    def check_expr(e, v):
+        assert isinstance(e, Const)
+        assert e.value == v
+
+    consts = [
+        ("v1", "\"Hello world\""),
+        ("v2", "42"),
+        ("v3", "42.333"),
+        ("v4", "True"),
+        ("v5", "False"),
+        ("v6", "None")
+    ]
+
+    for var, val in consts:
+        check_expr(main.getexpr(loc, var), val)
+
+
