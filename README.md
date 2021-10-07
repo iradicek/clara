@@ -10,14 +10,22 @@ programming assignments, described in the following paper:
 (https://dl.acm.org/doi/10.1145/3192366.3192387 and https://arxiv.org/abs/1603.03165).
 
 
-Supported Python versions
+Supported Python & OS versions
 =========================
 
-The package is currently tested on the following Python versions:
+The package is currently supported/tested on the following operating systems:
+- Fedora
+- Debian
+- Ubuntu
+
+The package is currently supported/tested on the following Python versions:
 - 3.6
 - 3.7
 - 3.8
 - 3.9
+
+Any other version might or might not work as expected. If you encounter any error with the above mentioned combination, please do file an issue.
+
 
 Dependencies
 ============
