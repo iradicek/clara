@@ -2,8 +2,6 @@
 Some basic (regression) Python tests
 """
 
-import pytest
-
 from utils import get_full_data_filename, parse_file
 
 from clara.interpreter import getlanginter
