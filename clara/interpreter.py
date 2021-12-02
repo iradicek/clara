@@ -208,8 +208,11 @@ class Interpreter(object):
         t = l.args[0].value
         l = self.execute(l.args[1], mem)
 
-        if isinstance(l, list) and len(l) > 0:
-            return self.convert(l[0], t)
+        if isinstance(l, list):
+            if len(l) > 0:
+                return self.convert(l[0], t)
+            elif len(l) == 0:
+                return UndefValue()
 
         raise RuntimeErr("ListHead on '%s'" % (l,))
 
@@ -217,8 +220,11 @@ class Interpreter(object):
 
         l = self.execute(l.args[0], mem)
 
-        if isinstance(l, list) and len(l) > 0:
-            return list(l[1:])
+        if isinstance(l, list):
+            if len(l) > 0:
+                return list(l[1:])
+            elif len(l) == 0:
+                return []
 
         raise RuntimeErr("ListTail on '%s'" % (l,))
 

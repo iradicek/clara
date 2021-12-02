@@ -410,6 +410,8 @@ class Parser(object):
 
         # Add condition (with new location)
         preloc = self.loc
+        condloc = self.addloc("the condition of the '%s' loop at line %s" % (
+            name, self.getline(node)))
         if isinstance(cond, Expr):
             condexpr = cond
         else:
@@ -419,8 +421,6 @@ class Parser(object):
                 
         if not condexpr:
             condexpr = Const('1')
-        condloc = self.addloc("the condition of the '%s' loop at line %s" % (
-            name, condexpr.line or self.getline(node)))
         self.addexpr(VAR_COND, condexpr)
 
         # Add exit loc
