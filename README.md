@@ -32,9 +32,11 @@ Dependencies
 - C compiler
 - Cython
   - `$ sudo aptitude install cython` (Debian)
+  - `$ sudo apt install cython` (Ubuntu)
   - `# dnf install Cython` (Fedora)
 - lpsolve 5.5 (development files and library)
   - `$ sudo aptitude install lp-solve liblpsolve55-dev` (Debian)
+  - `$ sudo apt install lp-solve liblpsolve55-dev` (Ubuntu)
   - `# dnf install lpsolve-devel` (Fedora)
 
 
