@@ -7,7 +7,7 @@ from cpython cimport array as c_array
 from libc.stdio cimport stdout, stderr
 
 
-cimport lpsolve
+from clara cimport lpsolve
 
 EQ = lpsolve.EQ
 LE = lpsolve.LE

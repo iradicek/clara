@@ -1,4 +1,6 @@
 clusters
+.idea
+clara.egg-info
 
 *.pyc
 *.pyo

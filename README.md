@@ -30,12 +30,16 @@ Any other version might or might not work as expected. If you encounter any erro
 Dependencies
 ============
 - C compiler
+  - `brew install llvm` (Mac)
+
 - Cython
   - `$ sudo aptitude install cython` (Debian)
   - `# dnf install Cython` (Fedora)
+  - `brew install cython` (Mac)
 - lpsolve 5.5 (development files and library)
   - `$ sudo aptitude install lp-solve liblpsolve55-dev` (Debian)
   - `# dnf install lpsolve-devel` (Fedora)
+  - `conda install conda-forge::lpsolve55` (Mac)
 
 
 Installation & running
