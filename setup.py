@@ -15,7 +15,7 @@ programming assignments',
       author_email='radicek@forsyte.at',
       url='https://github.com/iradicek/clara',
       packages=['clara'],
-      ext_modules = cythonize(extensions),
+      ext_modules=cythonize(extensions, compiler_directives={'language_level' : "3"}),
       install_requires=['pycparser', 'zss'],
       scripts=['bin/clara']
-     )
+      )
